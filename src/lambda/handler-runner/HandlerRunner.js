@@ -4,6 +4,7 @@ import {
   supportedNodejs,
   supportedPython,
   supportedRuby,
+  supportedJava,
 } from '../../config/index.js'
 import { satisfiesVersionRange } from '../../utils/index.js'
 
@@ -64,6 +65,11 @@ export default class HandlerRunner {
     if (supportedRuby.has(runtime)) {
       const { default: RubyRunner } = await import('./RubyRunner.js')
       return new RubyRunner(this._funOptions, this._env)
+    }
+
+    if (supportedJava.has(runtime)) {
+      const { default: JavaRunner } = await import('./JavaRunner.js')
+      return new JavaRunner(this._funOptions, this._env)
     }
 
     // TODO FIXME

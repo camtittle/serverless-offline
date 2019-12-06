@@ -16,9 +16,7 @@ export const supportedGo = new Set([
 ])
 
 // JAVA
-export const supportedJava = new Set([
-  // 'java8'
-])
+export const supportedJava = new Set(['java8'])
 
 // NODE.JS
 export const supportedNodejs = new Set([

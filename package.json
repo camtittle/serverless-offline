@@ -124,6 +124,7 @@
     "Ram Hardy (https://github.com/computerpunc)",
     "Ramon Emilio Savinon (https://github.com/vaberay)",
     "Rob Brazier (https://github.com/robbrazier)",
+    "Rowell Belen (https://github.com/bytekast)",
     "Russell Schick (https://github.com/rschick)",
     "Ryan Zhang (https://github.com/ryanzyy)",
     "Selcuk Cihan (https://github.com/selcukcihan)",
@@ -161,6 +162,7 @@
     "object.fromentries": "^2.0.1",
     "please-upgrade-node": "^3.2.0",
     "semver": "^6.3.0",
+    "serverless-jvm-plugin": "0.0.5",
     "update-notifier": "^3.0.1",
     "velocityjs": "^2.0.0",
     "ws": "^7.2.0"

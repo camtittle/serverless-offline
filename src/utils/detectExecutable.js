@@ -1,8 +1,8 @@
 import execa from 'execa'
 
-async function detectExecutable(exe) {
+async function detectExecutable(exe, versionFlag = '--version') {
   try {
-    const { failed } = await execa(exe, ['--version'])
+    const { failed } = await execa(exe, [versionFlag])
 
     return failed === false
   } catch (e) {
@@ -20,4 +20,8 @@ export async function detectPython3() {
 
 export async function detectRuby() {
   return detectExecutable('ruby')
+}
+
+export async function detectJava() {
+  return detectExecutable('java', '-version')
 }
