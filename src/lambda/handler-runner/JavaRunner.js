@@ -67,7 +67,7 @@ export default class JavaRunner {
       '--serverless-offline',
     ]
 
-    const java = execa('lambda-local', args, {
+    const java = execa('java-invoke-local', args, {
       env: this._env,
       input,
       // shell: true,
