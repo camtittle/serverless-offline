@@ -1,5 +1,5 @@
 import { EOL } from 'os'
-import execa from 'execa'
+import { invokeJavaLocal } from 'java-invoke-local'
 
 const { parse, stringify } = JSON
 const { has } = Reflect
@@ -67,37 +67,11 @@ export default class JavaRunner {
       '--serverless-offline',
     ]
 
-    const java = execa('java-invoke-local', args, {
-      env: this._env,
-      input,
-      // shell: true,
-    })
-
-    let result
-
+    const result = invokeJavaLocal(args, this._env)
     try {
-      result = await java
+      return this._parsePayload(result)
     } catch (err) {
-      // TODO
-      console.log(err)
-
-      throw err
-    }
-
-    const { stderr, stdout } = result
-
-    if (stderr) {
-      // TODO
-      console.log(stderr)
-
-      return stderr
-    }
-
-    try {
-      return this._parsePayload(stdout)
-    } catch (err) {
-      console.log(stdout)
-      // TODO return or re-throw?
+      console.log(result)
       return err
     }
   }
