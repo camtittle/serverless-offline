@@ -1,4 +1,5 @@
 import { EOL } from 'os'
+import fetch from 'node-fetch'
 import { invokeJavaLocal } from 'java-invoke-local'
 
 const { parse, stringify } = JSON
@@ -54,20 +55,49 @@ export default class JavaRunner {
       event,
     })
 
-    const args = [
-      '-c',
-      this._handler,
-      '-a',
-      this._deployPackage,
-      '-f',
-      this._functionName,
-      '-d',
-      input,
-      '--json-output',
-      '--serverless-offline',
-    ]
+    let result
+    try {
+      // Assume java-invoke-local server is running
 
-    const result = invokeJavaLocal(args, this._env)
+      const data = stringify({
+        artifact: this._deployPackage,
+        handler: this._handler,
+        data: input,
+        function: this._functionName,
+        jsonOutput: true,
+        serverlessOffline: true,
+      })
+
+      const httpOptions = {
+        method: 'POST',
+        body: data,
+      }
+
+      const response = await fetch('http://localhost:8080/invoke', httpOptions)
+      result = await response.text()
+    } catch (e) {
+      console.log(
+        'Local java server not running. For faster local invocations, run "java-invoke-local --server" in your project directory',
+      )
+
+      // Fallback invocation
+
+      const args = [
+        '-c',
+        this._handler,
+        '-a',
+        this._deployPackage,
+        '-f',
+        this._functionName,
+        '-d',
+        input,
+        '--json-output',
+        '--serverless-offline',
+      ]
+
+      result = invokeJavaLocal(args, this._env)
+    }
+
     try {
       return this._parsePayload(result)
     } catch (err) {
