@@ -84,9 +84,9 @@ export default class WebSocketClients {
     // let result
 
     try {
-      /* result = */ await lambdaFunction.runHandler()
+      const result = await lambdaFunction.runHandler()
 
-      // TODO what to do with "result"?
+      this.send(connectionId, JSON.stringify(result))
     } catch (err) {
       console.log(err)
       sendError(err)
